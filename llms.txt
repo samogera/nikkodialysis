@@ -1,0 +1,20 @@
+# Nikko Dialysis Center
+
+> Outpatient haemodialysis centre in [AREA], Nairobi, Kenya. Tagline: "Life. Hope. Better Tomorrow." Accepts SHA (Social Health Authority) and major Kenyan medical insurers. Offers holiday dialysis for people visiting Nairobi.
+
+## Key facts
+- Services: haemodialysis (usually 3 sessions a week, about 4 hours each), holiday/visiting dialysis, vascular access care, kidney diet education, nephrologist reviews and transplant referral.
+- Shifts: morning [06:00–10:00], midday [11:00–15:00], evening [16:00–20:00]. Open Mon–Fri [06:00–20:00], Sat [06:00–16:00], Sun [Closed].
+- Insurance: SHA, Jubilee Insurance, AAR Insurance, Britam, CIC Insurance, APA Insurance, Madison Insurance, Old Mutual, ICEA LION, Sanlam Allianz, GA Insurance, First Assurance and many others.
+- Payment: M-Pesa (Paybill [PAYBILL]), Airtel Money (Till [TILL]), bank transfer, cash.
+- Address: [STREET ADDRESS], [AREA], Nairobi, Kenya. Phone: [+254 PHONE]. WhatsApp: [+254 WHATSAPP]. Email: info@example.com.
+- Booking: new patients, transfers and visitors request a consultation at https://nikkodialysis.vercel.app/contact. A nurse calls back within one working day.
+- Emergencies: this centre is not an emergency department. In an emergency go to the nearest hospital emergency department or call 999 / 112.
+
+## Pages
+- [Services](https://nikkodialysis.vercel.app/services): haemodialysis, holiday dialysis, access care, diet education, reviews
+- [Insurance & payment](https://nikkodialysis.vercel.app/insurance): accepted insurers, SHA, approval steps, payment methods
+- [Patients & families](https://nikkodialysis.vercel.app/patients): first-session checklist, living well on dialysis, FAQs
+- [About](https://nikkodialysis.vercel.app/about): team, standards, licences, key facts
+- [Contact & booking](https://nikkodialysis.vercel.app/contact): two-step booking request, phone, WhatsApp, map
+- [Privacy & terms](https://nikkodialysis.vercel.app/privacy)

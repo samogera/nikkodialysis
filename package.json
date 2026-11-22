@@ -1,0 +1,9 @@
+{
+  "name": "nikkodialysis",
+  "private": true,
+  "description": "Nikko Dialysis Center website",
+  "scripts": {
+    "rebuild": "python3 scripts/build.py"
+  },
+  "engines": { "node": ">=18" }
+}
