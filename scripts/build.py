@@ -348,7 +348,7 @@ def home():
 </div></section>
 <section class="section tight-top"><div class="wrap stack-lg">
 <div class="stack max-lg"><p class="eyebrow">Getting started</p><h2 class="h2">From first call to <span class="accent">first session.</span></h2></div>
-<ol class="steps reveal">{"".join(f'<li><span class="n">{n}</span><strong class="h3">{t}</strong><span class="body">{d}</span><img class="wmk" src="/assets/img/icons/{ico}.webp" alt="" aria-hidden="true" width="180" height="180" loading="lazy" decoding="async"></li>' for (n, t, d), ico in zip(steps, ["phone", "doctor", "calendar", "care"]))}</ol>
+<ol class="steps reveal">{"".join(f'<li><strong class="h3">{t}</strong><span class="body">{d}</span><img class="wmk" src="/assets/img/icons/{ico}.webp" alt="" aria-hidden="true" width="180" height="180" loading="lazy" decoding="async"></li>' for (n, t, d), ico in zip(steps, ["phone", "doctor", "calendar", "care"]))}</ol>
 <div class="banner blue reveal"><div class="stack max-md" style="gap:12px"><h2 class="h2 sm">Not sure where to start?</h2><p class="body">Tell us what you need in two quick steps. A nurse will call you back.</p></div><div class="row"><a class="btn btn-dark" href="/contact">Book a consultation {ic("arrow", 2)}</a><a class="btn btn-line" href="/patients#faq">Read the FAQs</a></div></div>
 </div></section>
 '''
