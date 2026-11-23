@@ -263,7 +263,7 @@ def footer():
 <div class="wm">
 <div class="wm-stage">
 <p class="wm-text"><span class="wm-word solid"><i style="--i:0">D</i><i style="--i:1">i</i><i style="--i:2">a</i><i style="--i:3">l</i><i style="--i:4">y</i><i style="--i:5">s</i><i style="--i:6">i</i><i style="--i:7">s</i></span><span class="wm-word outline"><i style="--i:8">C</i><i style="--i:9">e</i><i style="--i:10">n</i><i style="--i:11">t</i><i style="--i:12">e</i><i style="--i:13">r</i></span></p>
-<svg class="wm-ecg" viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="trace" d="{WM_ECG}" pathLength="1000"/><path class="beat" d="{WM_ECG}" pathLength="1000"/></svg>
+<svg class="wm-ecg"><path class="trace"/><path class="beat"/></svg>
 </div>
 <p class="wm-tag">Life. Hope. Better Tomorrow.</p>
 </div>

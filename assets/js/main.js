@@ -45,6 +45,25 @@
     if (!stacked && words.length > 1) w += parseFloat(getComputedStyle(wmt).columnGap || 0) || 0;
     var fs = parseFloat(getComputedStyle(wmt).fontSize);
     if (w > 0) wmt.style.fontSize = Math.min(fs * box / w, stacked ? 140 : 210) + 'px';
+    drawEcg(stacked);
+  }
+  function drawEcg(stacked) {
+    var stage = wmt.parentNode, svg = $('.wm-ecg', stage); if (!svg) return;
+    var ws = $$('.wm-word', wmt); if (ws.length < 2) return;
+    var sr = stage.getBoundingClientRect(), a = ws[0].getBoundingClientRect(), b = ws[1].getBoundingClientRect();
+    var W = root.clientWidth, H = 100, y = H / 2;
+    var gx = stacked ? W / 2 : (a.right + b.left) / 2;
+    var cy = stacked ? (a.bottom + b.top) / 2 : (a.top + a.bottom) / 2;
+    var u = Math.max(stacked ? 16 : 22, Math.min(40, (stacked ? 0.06 * W : (b.left - a.right) / 3)));
+    svg.style.left = (-sr.left) + 'px'; svg.style.width = W + 'px';
+    svg.style.top = (cy - sr.top - H / 2) + 'px'; svg.style.height = H + 'px';
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var x0 = gx - u * 2.2;
+    var dd = 'M0 ' + y + 'H' + x0.toFixed(1) + 'l' + [u*.35,-6,u*.3,6].map(function(n){return n.toFixed(1);}).join(' ') + 'h' + (u*.45).toFixed(1) +
+      'l' + [u*.42,-u*1.05,u*.5,u*2.3,u*.55,-u*2.6,u*.42,u*1.8,u*.35,-u*.45].map(function(n){return n.toFixed(1);}).join(' ') +
+      'h' + (u*.4).toFixed(1) + 'l' + [u*.3,-5,u*.3,5].map(function(n){return n.toFixed(1);}).join(' ') + 'H' + W;
+    $$('path', svg).forEach(function (p) { p.setAttribute('d', dd); });
+    try { svg.style.setProperty('--L', Math.ceil($('path', svg).getTotalLength()) + 'px'); } catch (e) {}
   }
   if (wmt) {
     fitWm();
