@@ -17,4 +17,4 @@
 - [Patients & families](https://nikkodialysis.vercel.app/patients): first-session checklist, living well on dialysis, FAQs
 - [About](https://nikkodialysis.vercel.app/about): team, standards, licences, key facts
 - [Contact & booking](https://nikkodialysis.vercel.app/contact): two-step booking request, phone, WhatsApp, map
-- [Privacy & terms](https://nikkodialysis.vercel.app/privacy)
+- [Privacy policy](https://nikkodialysis.vercel.app/privacy), [Terms](https://nikkodialysis.vercel.app/terms), [Cookies](https://nikkodialysis.vercel.app/cookies), [Accessibility](https://nikkodialysis.vercel.app/accessibility)

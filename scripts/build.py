@@ -5,7 +5,9 @@ Edit CONFIG below (phone, address, domain, etc.), then run:
     python3 scripts/build.py
 Every HTML page, sitemap.xml, robots.txt, llms.txt and assets/js/config.js is regenerated.
 """
-import json, os, datetime, html
+import json, os, sys, datetime, html
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import legal
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -105,8 +107,14 @@ PAGES = {
                   "We accept SHA and major insurers including Jubilee, AAR, Britam, CIC and APA. Pay balances by M-Pesa, Airtel Money, bank transfer or cash."),
     "contact": ("/contact", "Contact", "Book Dialysis in Nairobi | Contact Nikko Dialysis Center",
                 f"Book a consultation, transfer or holiday dialysis in two quick steps. Call {C['phone_display']} or WhatsApp us. A nurse calls you back."),
-    "privacy": ("/privacy", "Privacy & terms", "Privacy Policy & Terms | Nikko Dialysis Center",
-                "How Nikko Dialysis Center protects your data under Kenya's Data Protection Act 2019, your rights, cookies and terms of use."),
+    "privacy": ("/privacy", "Privacy policy", "Privacy Policy | Nikko Dialysis Center",
+                "How Nikko Dialysis Center collects, uses and protects your personal and health information under Kenya's Data Protection Act 2019, and your rights."),
+    "terms": ("/terms", "Terms of use", "Terms of Use | Nikko Dialysis Center",
+              "Terms for using the Nikko Dialysis Center website: medical disclaimer, booking requests, fees and insurance, trademarks and governing law."),
+    "cookies": ("/cookies", "Cookie policy", "Cookie Policy | Nikko Dialysis Center",
+                "Which cookies and local storage the Nikko Dialysis Center website uses, why, and how to change your choice."),
+    "accessibility": ("/accessibility", "Accessibility", "Accessibility Statement | Nikko Dialysis Center",
+                      "Our commitment to an accessible website (WCAG 2.2 AA) and centre, what we have done, known limitations and how to give feedback."),
     "404": ("/404", "Page not found", "Page not found | Nikko Dialysis Center", "The page you were looking for has moved or doesn't exist."),
 }
 NAV = [("index", "Home"), ("services", "Services"), ("about", "About"), ("patients", "Patients & families"), ("insurance", "Insurance")]
@@ -231,6 +239,7 @@ def header(key):
 '''
 
 ECG = "M0 36H500l10-4 8 4h20l12-30 14 62 16-70 12 50 10-12h16l8-6 10 6H1200"
+WM_ECG = "M0 40H640l10-5 8 5h16l12-30 14 66 16-74 12 52 10-14h14l8-6 10 6H1200"
 CUT = "M0 30H520l10-4 8 4h18l12-22 14 46 16-52 12 36 10-8h14l8-4 10 4H1200"
 
 def footer():
@@ -247,15 +256,15 @@ def footer():
 <div class="fcol fvisit"><p class="h">Visit</p><address>{C['street']}, {C['area']}, Nairobi</address><span>Mon–Fri {C['hours_weekdays']} · Sat {C['hours_saturday']}</span></div>
 </div>
 <div class="legalbar">
-<p>Licence {C['kmpdc_licence']} · SHA code {C['sha_code']} · General information only, not medical advice. In an emergency go to the nearest emergency department or call 999 / 112.</p>
-<div class="row-between"><span>© <span data-year>2026</span> {C['name']}</span><span class="links"><a href="/privacy">Privacy</a><a href="/privacy#terms">Terms</a><a href="/privacy#cookies" data-cookie-settings>Cookies</a><a href="/privacy#accessibility">Accessibility</a></span></div>
+<p>Information on this website doesn't replace your doctor's advice. In an emergency, go to the nearest emergency department or call 999 / 112.</p>
+<div class="row-between"><span>© <span data-year>2026</span> {C['name']}</span><span class="links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="/accessibility">Accessibility</a></span></div>
 </div>
 </div>
 <div class="fanim" aria-hidden="true">
-<div class="split-word">
-<span class="w top">Dialysis <b>Center</b></span>
-<span class="w bot">Dialysis <b>Center</b></span>
-<div class="cut"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="{CUT}" pathLength="1600"/></svg></div>
+<div class="wm">
+<p class="wm-text"><span class="wm-word solid"><i style="--i:0">D</i><i style="--i:1">i</i><i style="--i:2">a</i><i style="--i:3">l</i><i style="--i:4">y</i><i style="--i:5">s</i><i style="--i:6">i</i><i style="--i:7">s</i></span><span class="wm-word outline"><i style="--i:8">C</i><i style="--i:9">e</i><i style="--i:10">n</i><i style="--i:11">t</i><i style="--i:12">e</i><i style="--i:13">r</i></span></p>
+<svg class="wm-ecg" viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="trace" d="{WM_ECG}" pathLength="1000"/><path class="beat" d="{WM_ECG}" pathLength="1000"/></svg>
+<p class="wm-tag">Life. Hope. Better Tomorrow.</p>
 </div>
 </div>
 </footer>
@@ -265,7 +274,7 @@ def footer():
 <a class="main" href="/contact">Book now</a>
 </nav>
 <div class="cookie" id="cookie" role="region" aria-label="Cookie notice" hidden>
-<p>We use essential cookies to run this site and, with your consent, privacy-friendly analytics to improve it. <a href="/privacy#cookies">Cookie policy</a>.</p>
+<p>We use essential cookies to run this site and, with your consent, privacy-friendly analytics to improve it. <a href="/cookies">Cookie policy</a>.</p>
 <div class="row"><button class="btn btn-dark btn-sm" type="button" data-consent="all">Accept all</button><button class="btn btn-line btn-sm" type="button" data-consent="essential">Essential only</button></div>
 </div>
 </body>
@@ -564,45 +573,23 @@ def contact():
 '''
     return page("contact", body)
 
-def privacy():
-    body = f'''<section class="page-hero" style="padding-bottom:56px"><div class="wrap stack" style="gap:24px">
-<p class="eyebrow">Legal</p><h1 class="h1 max-lg">Privacy, terms <span class="accent">&amp; your rights.</span></h1>
-<p class="lead max-md">How we handle your information under Kenya's Data Protection Act, 2019, and the terms for using this website. Last updated {C['last_updated']}.</p>
+def legal_page(key):
+    title, intro, sections = getattr(legal, key)(C)
+    tabs = "".join(f'<a href="{href(k)}"{" aria-current=\"page\"" if k == key else ""}>{t}</a>' for k, t in legal.LEGAL_NAV)
+    toc = "".join(f'<a href="#{i}">{h}</a>' for i, h, _ in sections)
+    secs = "".join(f'<section id="{i}"><h2 class="h3">{h}</h2>{b}</section>' for i, h, b in sections)
+    body = f'''<section class="page-hero legal-hero"><div class="wrap stack" style="gap:20px">
+<nav class="legal-tabs" aria-label="Legal pages">{tabs}</nav>
+<h1 class="h1 max-lg">{title}</h1>
+<p class="lead max-md">{intro}</p>
+<p class="small">Last updated {C['last_updated']}</p>
 </div></section>
 <section style="padding:0 0 128px"><div class="wrap legal">
-<nav class="toc" aria-label="Contents"><span class="small" style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">On this page</span><a href="#privacy">Privacy policy</a><a href="#rights">Your rights</a><a href="#cookies">Cookies</a><a href="#terms">Terms of use</a><a href="#accessibility">Accessibility</a></nav>
-<article>
-<section id="privacy"><h2 class="h2 sm">Privacy policy</h2>
-<p class="body">{C['name']} ("we") is the data controller for information collected through this website, registered with the Office of the Data Protection Commissioner (ODPC) under no. {C['odpc_reg']}. Contact our data protection officer at <a href="mailto:{C['email']}">{C['email']}</a>.</p>
-<h3 class="h3">What we collect</h3><p class="body">Only what we need to respond to you: your name, phone number, optional email, the services you ask about, preferred contact method and time, and anything you choose to type in the message box. We do not ask for medical records through this website.</p>
-<h3 class="h3">Health information</h3><p class="body">Information about your health is sensitive personal data. We process it only with your explicit consent, given on our booking form, or where needed to provide your care, and we keep it confidential under professional medical duties.</p>
-<h3 class="h3">How we use it</h3><p class="body">To call or message you back, arrange consultations and sessions, check your SHA or insurance cover with your permission, and, only if you opt in, send patient education updates. We never sell your data or use it for third-party advertising.</p>
-<h3 class="h3">Who we share it with</h3><p class="body">Your insurer or SHA (to verify cover, with your consent), your referring or home dialysis unit (for transfers and holiday sessions), and service providers who host our website and email under written data-processing agreements. Where data is stored outside Kenya, we apply the safeguards the Act requires.</p>
-<h3 class="h3">How long we keep it</h3><p class="body">Enquiries that don't lead to care are deleted after 12 months. Clinical records are kept for the period required by Kenyan health regulations.</p>
-<h3 class="h3">Security</h3><p class="body">This site uses HTTPS encryption. Enquiries are stored with access limited to staff who need them, and backed up securely.</p>
-</section>
-<section id="rights"><h2 class="h2 sm">Your rights</h2>
-<p class="body">Under the Data Protection Act, 2019 you can:</p>
-<ul><li>be told how your data is used</li><li>access the data we hold about you</li><li>ask us to correct or delete it</li><li>object to or withdraw consent for processing, including marketing, at any time</li><li>complain to the Office of the Data Protection Commissioner (<a href="https://www.odpc.go.ke" rel="noopener" target="_blank">odpc.go.ke</a>)</li></ul>
-<p class="body">To use any of these rights, email <a href="mailto:{C['email']}">{C['email']}</a> or ask at reception. If you are in the EU or UK, you have equivalent rights under the GDPR.</p>
-<div class="card" style="padding:24px;gap:8px"><strong class="h3" style="font-size:18px">Patient rights</strong><p class="body">You have the right to respectful, safe care; to clear information about your treatment and costs; to a second opinion; and to raise a complaint without it affecting your care. Speak to the nurse in charge or email us.</p></div>
-</section>
-<section id="cookies"><h2 class="h2 sm">Cookies</h2>
-<p class="body">We use essential storage to make the site work and remember your choices. With your consent, we also use privacy-friendly analytics and error tracking to see which pages help people and to fix problems. You can change your choice at any time using <a href="/privacy#cookies" data-cookie-settings>cookie settings</a>.</p>
-<div class="table"><div><span>Type</span><span>Purpose</span><span>Consent</span></div><div><span>Essential</span><span>Security, form spam protection, remembering your cookie choice and checklist</span><span>Always on</span></div><div><span>Analytics</span><span>Anonymous page visits and site errors</span><span>Only if accepted</span></div></div>
-</section>
-<section id="terms"><h2 class="h2 sm">Terms of use</h2>
-<p class="body">This website gives general information about our services. It is not medical advice and does not create a doctor–patient relationship. Always follow the advice of your own doctor or care team.</p>
-<p class="body">A request sent through this website is not a confirmed booking until our team contacts you. Prices, hours and insurance arrangements may change; we confirm them in writing before treatment. Images show our unit or are used with permission, and insurer logos are trademarks of their owners. Patient stories are shared only with written consent.</p>
-<p class="body">This website does not use AI chat or automated medical advice. These terms are governed by the laws of Kenya.</p>
-</section>
-<section id="accessibility"><h2 class="h2 sm">Accessibility</h2>
-<p class="body">We aim to meet WCAG 2.2 AA: readable text sizes, strong colour contrast, keyboard navigation and screen-reader labels. If anything on this site is hard to use, tell us at <a href="mailto:{C['email']}">{C['email']}</a> and we'll fix it.</p>
-</section>
-</article>
+<nav class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{toc}</nav>
+<article class="prose">{secs}</article>
 </div></section>
 '''
-    return page("privacy", body)
+    return page(key, body)
 
 def notfound():
     body = f'''<section class="section"><div class="wrap stack" style="max-width:900px;gap:28px">
@@ -631,10 +618,10 @@ VERSION = datetime.datetime.now().strftime("%Y%m%d%H%M")
 
 def main():
     out = {"index.html": home(), "services.html": services(), "about.html": about(), "patients.html": patients(),
-           "insurance.html": insurance(), "contact.html": contact(), "privacy.html": privacy(), "404.html": notfound()}
+           "insurance.html": insurance(), "contact.html": contact(), "privacy.html": legal_page("privacy"), "terms.html": legal_page("terms"), "cookies.html": legal_page("cookies"), "accessibility.html": legal_page("accessibility"), "404.html": notfound()}
     for f, s in out.items():
         write(f, s)
-    pri = {"index": "1.0", "contact": "0.9", "services": "0.9", "insurance": "0.8", "patients": "0.8", "about": "0.7", "privacy": "0.3"}
+    pri = {"index": "1.0", "contact": "0.9", "services": "0.9", "insurance": "0.8", "patients": "0.8", "about": "0.7", "privacy": "0.3", "terms": "0.3", "cookies": "0.2", "accessibility": "0.2"}
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for k, p in pri.items():
         sm.append(f"  <url><loc>{C['url']}{PAGES[k][0] if PAGES[k][0] != '/' else '/'}</loc><lastmod>{C['last_updated']}</lastmod><priority>{p}</priority></url>")
@@ -662,7 +649,7 @@ def main():
 - [Patients & families]({C['url']}/patients): first-session checklist, living well on dialysis, FAQs
 - [About]({C['url']}/about): team, standards, licences, key facts
 - [Contact & booking]({C['url']}/contact): two-step booking request, phone, WhatsApp, map
-- [Privacy & terms]({C['url']}/privacy)
+- [Privacy policy]({C['url']}/privacy), [Terms]({C['url']}/terms), [Cookies]({C['url']}/cookies), [Accessibility]({C['url']}/accessibility)
 """)
     write("assets/js/config.js", "window.NIKKO=" + json.dumps({"plausibleDomain": C["plausible_domain"], "sentryLoader": C["sentry_loader"]}) + ";\n")
     exp = (datetime.date.today() + datetime.timedelta(days=365)).isoformat()

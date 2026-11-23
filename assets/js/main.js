@@ -23,7 +23,7 @@
   }
 
   /* Reveal on scroll + split wordmark */
-  var targets = $$('.reveal, .split-word');
+  var targets = $$('.reveal, .wm');
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });

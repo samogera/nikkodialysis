@@ -13,7 +13,10 @@ A fast static website for Nikko Dialysis Center, Nairobi: plain HTML, CSS and va
 | `/patients` | `patients.html` | First-session checklist, habits, families, filterable FAQ |
 | `/insurance` | `insurance.html` | Searchable insurer grid, ways to pay, M-Pesa / Airtel Money / bank / cash, approval steps |
 | `/contact` | `contact.html` | Two-step booking form (needs → details), contact details, map |
-| `/privacy` | `privacy.html` | Privacy policy (Kenya Data Protection Act 2019), rights, cookies, terms, accessibility |
+| `/privacy` | `privacy.html` | Privacy policy (Kenya Data Protection Act 2019): data, legal bases, sharing, retention, rights |
+| `/terms` | `terms.html` | Terms of use: medical disclaimer, bookings, fees, trademarks, Kenyan law |
+| `/cookies` | `cookies.html` | Cookie policy with exact storage list and a "Change cookie settings" button |
+| `/accessibility` | `accessibility.html` | Accessibility statement (WCAG 2.2 AA) |
 | `404` | `404.html` | Custom not-found page (served automatically by Vercel) |
 
 ## Editing content
@@ -22,7 +25,7 @@ All business details live in **`CONFIG` at the top of `scripts/build.py`**: phon
 ```bash
 python3 scripts/build.py      # regenerates every page, sitemap.xml, robots.txt, llms.txt, config.js
 ```
-Edit page copy in the same file (one function per page). Styles are in `assets/css/styles.css`; behaviour in `assets/js/main.js`.
+Edit page copy in the same file (one function per page); legal text lives in `scripts/legal.py`. Styles are in `assets/css/styles.css`; behaviour in `assets/js/main.js`.
 
 ## Deploy (Vercel)
 1. Import this repo in Vercel → Framework preset **Other** → no build command → output directory `.` (root).
@@ -81,7 +84,7 @@ Edit page copy in the same file (one function per page). Styles are in `assets/c
 - [ ] Set the real domain in `CONFIG["url"]`; set `ENQUIRY_*` env vars; send a test booking and a test signup
 - [ ] Confirm the insurer list against the centre's contracts; get a full Old Mutual logo and a sharper Madison logo
 - [ ] Add photos of the treatment bay, reception and building (with consent for any identifiable person)
-- [ ] Have a Kenyan advocate review `/privacy`; register with the ODPC as a data controller
+- [ ] Have a Kenyan advocate review `/privacy`, `/terms` and `/cookies`; register with the ODPC as a data controller
 - [ ] Create and verify Google Business Profile ("Dialysis center"), Bing Places and Apple Business Connect with identical name, address and phone
 - [ ] Add `maps_embed` and `maps_url`, and the social profile links
 - [ ] Enable analytics: set `plausible_domain` (and optionally `sentry_loader`) in `CONFIG`
