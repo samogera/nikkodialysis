@@ -27,7 +27,7 @@
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
     targets.forEach(function (t) { io.observe(t); });
   } else { targets.forEach(function (t) { t.classList.add('in'); }); }
 

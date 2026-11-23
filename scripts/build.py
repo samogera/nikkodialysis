@@ -234,52 +234,29 @@ ECG = "M0 36H500l10-4 8 4h20l12-30 14 62 16-70 12 50 10-12h16l8-6 10 6H1200"
 CUT = "M0 30H520l10-4 8 4h18l12-22 14 46 16-52 12 36 10-8h14l8-4 10 4H1200"
 
 def footer():
-    social = []
-    for k, n in (("facebook", "fb"), ("instagram", "ig"), ("linkedin", "in")):
-        if C[k]:
-            social.append(f'<a href="{C[k]}" rel="noopener" target="_blank" aria-label="{k.title()}">{ic(n)}</a>')
-    social.insert(0, f'<a href="{WA}" rel="noopener" target="_blank" aria-label="WhatsApp">{ic("chat")}</a>')
-    marquee_items = ["Haemodialysis", "Holiday dialysis", "SHA &amp; insurance accepted", "Morning · midday · evening shifts", "Life. Hope. Better Tomorrow.", "Kidney diet education", "Access care"]
-    mq = "".join(f"<span>{m}</span>" for m in marquee_items * 2)
     return f'''</main>
 <footer class="footer">
-<div class="wrap">
-<div class="fcta">
-<div class="stack">
-<span class="live"><i aria-hidden="true"></i>Booking lines open Mon–Sat</span>
-<h2>Need dialysis in Nairobi? <span>We'll find your chair.</span></h2>
-<div class="row"><a class="btn btn-white" href="/contact">Book a consultation {ic("arrow", 2)}</a><a class="btn btn-ghost-dark" href="tel:{C['phone_tel']}">Call {C['phone_display']}</a></div>
+<div class="wrap fwrap">
+<div class="ftop">
+<div class="fbrand"><img src="/assets/img/logo-white.webp" alt="{C['name']}" width="141" height="44" loading="lazy"><p>Haemodialysis &amp; holiday dialysis in {C['area']}, Nairobi.</p></div>
+<div class="fcta"><p>Need dialysis in Nairobi?</p><div class="row"><a class="btn btn-white btn-sm" href="/contact">Book a consultation</a><a class="btn btn-ghost-dark btn-sm" href="tel:{C['phone_tel']}">Call us</a></div></div>
 </div>
-<form class="signup" data-signup novalidate>
-<label for="tips-email" style="font-size:15px;font-weight:600">Patient tips, once a month</label>
-<p class="small" style="color:#8796B5">Kidney-friendly meals, fluid tips and unit news. No spam, unsubscribe any time.</p>
-<div class="row-in"><input id="tips-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required maxlength="120"><button class="btn btn-white btn-sm" type="submit">Subscribe</button></div>
-<label class="hp" aria-hidden="true">Leave empty<input name="website" tabindex="-1" autocomplete="off"></label>
-<label class="consent"><input type="checkbox" name="consent" required><span>I agree to receive emails and accept the <a href="/privacy" style="color:#A9B6D0;text-decoration:underline">privacy policy</a>.</span></label>
-<p class="msg" role="status" hidden></p>
-</form>
+<div class="fgrid">
+<nav class="fcol" aria-label="Footer"><p class="h">Explore</p><a href="/services">Services</a><a href="/about">About</a><a href="/patients">Patients &amp; families</a><a href="/insurance">Insurance</a></nav>
+<div class="fcol"><p class="h">Contact</p><a href="tel:{C['phone_tel']}">{C['phone_display']}</a><a href="{WA}" rel="noopener" target="_blank">WhatsApp</a><a href="mailto:{C['email']}">{C['email']}</a></div>
+<div class="fcol fvisit"><p class="h">Visit</p><address>{C['street']}, {C['area']}, Nairobi</address><span>Mon–Fri {C['hours_weekdays']} · Sat {C['hours_saturday']}</span></div>
 </div>
-<div class="pulse" aria-hidden="true"><svg viewBox="0 0 1200 72" preserveAspectRatio="none"><path class="base" d="{ECG}"/><path class="beat" d="{ECG}" pathLength="1200"/></svg></div>
-<div class="fcols">
-<div class="fcol fbrand"><img src="/assets/img/logo-white.webp" alt="{C['name']}" width="154" height="48" loading="lazy"><p class="small" style="color:#A9B6D0;max-width:260px">Haemodialysis, holiday dialysis and kidney care in {C['area']}, Nairobi.</p><div class="social">{"".join(social)}</div></div>
-<nav class="fcol" aria-label="Care"><p class="h">Care</p><a href="/services#hd">Haemodialysis</a><a href="/services#holiday">Holiday dialysis</a><a href="/services#access">Access care</a><a href="/services#diet">Diet &amp; education</a></nav>
-<nav class="fcol" aria-label="Patients"><p class="h">Patients</p><a href="/patients">Your first session</a><a href="/insurance">Insurance &amp; payment</a><a href="/patients#faq">FAQs</a><a href="/patients#families">Families &amp; carers</a></nav>
-<nav class="fcol" aria-label="Centre"><p class="h">Centre</p><a href="/about">About us</a><a href="/about#team">Care team</a><a href="/about#standards">Licences &amp; standards</a><a href="/contact">Contact</a></nav>
-<div class="fcol"><p class="h">Visit</p><address>{C['street']}<br>{C['area']}, Nairobi</address><span style="color:#A9B6D0">Mon–Fri {C['hours_weekdays']}<br>Sat {C['hours_saturday']} · Sun {C['hours_sunday']}</span><a href="mailto:{C['email']}">{C['email']}</a></div>
-</div>
-<p class="small" style="color:#A9B6D0"><strong style="color:#F2F6FC;font-weight:600">We accept</strong> SHA, major private insurers, M-Pesa, Airtel Money, bank transfer and cash. <a href="/insurance" style="color:#F2F6FC;font-weight:600">See insurers →</a></p>
-<hr>
 <div class="legalbar">
-<div class="ids"><span>KMPDC facility licence: {C['kmpdc_licence']}</span><span>SHA facility code: {C['sha_code']}</span><span>ODPC data controller reg.: {C['odpc_reg']}</span></div>
-<p>Information on this website is general and does not replace advice from your doctor. In a medical emergency, go to the nearest hospital emergency department or call 999 / 112.</p>
-<div class="row-between"><span>© <span data-year>2026</span> {C['name']}. All rights reserved.</span><span class="links"><a href="/privacy">Privacy policy</a><a href="/privacy#terms">Terms of use</a><a href="/privacy#cookies" data-cookie-settings>Cookie settings</a><a href="/privacy#accessibility">Accessibility</a><a href="/privacy#rights">Patient rights</a><a href="/sitemap.xml">Sitemap</a></span></div>
+<p>Licence {C['kmpdc_licence']} · SHA code {C['sha_code']} · General information only, not medical advice. In an emergency go to the nearest emergency department or call 999 / 112.</p>
+<div class="row-between"><span>© <span data-year>2026</span> {C['name']}</span><span class="links"><a href="/privacy">Privacy</a><a href="/privacy#terms">Terms</a><a href="/privacy#cookies" data-cookie-settings>Cookies</a><a href="/privacy#accessibility">Accessibility</a></span></div>
 </div>
 </div>
-<div class="tagline-marquee" aria-hidden="true"><div class="track">{mq}</div></div>
-<div class="split-word" aria-hidden="true">
+<div class="fanim" aria-hidden="true">
+<div class="split-word">
 <span class="w top">Dialysis <b>Center</b></span>
 <span class="w bot">Dialysis <b>Center</b></span>
 <div class="cut"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="{CUT}" pathLength="1600"/></svg></div>
+</div>
 </div>
 </footer>
 <nav class="actionbar" aria-label="Quick actions">
