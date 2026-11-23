@@ -16,10 +16,12 @@
       var open = mb.getAttribute('aria-expanded') !== 'true';
       mb.setAttribute('aria-expanded', String(open));
       mb.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      mm.classList.toggle('open', open);
+      mm.classList.toggle('open', open); root.classList.toggle('menu-open', open);
       $('path', mb).setAttribute('d', open ? 'M6 6l12 12M18 6 6 18' : 'M4 7h16M4 12h16M4 17h16');
     });
     d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mm.classList.contains('open')) mb.click(); });
+    $$('a', mm).forEach(function (a) { a.addEventListener('click', function () { if (mm.classList.contains('open')) mb.click(); }); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 1020 && mm.classList.contains('open')) mb.click(); });
   }
 
   /* Reveal on scroll + split wordmark */
@@ -30,6 +32,25 @@
     }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
     targets.forEach(function (t) { io.observe(t); });
   } else { targets.forEach(function (t) { t.classList.add('in'); }); }
+
+  /* Fit the footer wordmark to its container (never cut, any font) */
+  var wmt = $('.wm-text');
+  function fitWm() {
+    if (!wmt) return;
+    wmt.style.fontSize = '';
+    var stacked = window.innerWidth <= 760;
+    var box = wmt.parentNode.clientWidth * (stacked ? 0.92 : 0.94);
+    var words = $$('.wm-word', wmt), w = 0;
+    words.forEach(function (x) { var s = x.scrollWidth; w = stacked ? Math.max(w, s) : w + s; });
+    if (!stacked && words.length > 1) w += parseFloat(getComputedStyle(wmt).columnGap || 0) || 0;
+    var fs = parseFloat(getComputedStyle(wmt).fontSize);
+    if (w > 0) wmt.style.fontSize = Math.min(fs * box / w, stacked ? 140 : 210) + 'px';
+  }
+  if (wmt) {
+    fitWm();
+    window.addEventListener('resize', fitWm);
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(fitWm);
+  }
 
   /* Tabs (session stages) */
   $$('[role=tablist]').forEach(function (list) {

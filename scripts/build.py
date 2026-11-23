@@ -219,11 +219,7 @@ def head(key, extra=""):
 def header(key):
     links = "".join(f'<a href="{href(k)}"{" aria-current=\"page\"" if k == key else ""}>{t}</a>' for k, t in NAV)
     mlinks = "".join(f'<a href="{href(k)}">{t}</a>' for k, t in NAV + [("contact", "Contact")])
-    return f'''<div class="topbar"><div class="wrap">
-<span><i class="dot" aria-hidden="true"></i>SHA &amp; major insurers accepted · Mon–Sat</span>
-<span class="hide-sm">Questions? Call <a href="tel:{C['phone_tel']}">{C['phone_display']}</a></span>
-</div></div>
-<header class="nav">
+    return f'''<header class="nav">
 <div class="wrap nav-inner">
 <a class="brand" href="/" aria-label="{C['name']} home"><img src="/assets/img/logo.webp" alt="{C['name']}" width="141" height="44" fetchpriority="high"></a>
 <nav class="nav-links" aria-label="Main">{links}</nav>
@@ -233,7 +229,10 @@ def header(key):
 <button class="btn btn-line menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div>
 </div>
-<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">{mlinks}<a class="btn btn-dark" href="/contact">Book a consultation</a></nav>
+<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
+<div class="mm-links">{mlinks}</div>
+<div class="mm-foot"><a class="btn btn-dark" href="/contact">Book a consultation</a><div class="mm-quick"><a href="tel:{C['phone_tel']}">{ic("phone")}Call</a><a href="{WA}" rel="noopener" target="_blank">{ic("chat")}WhatsApp</a></div></div>
+</nav>
 </header>
 <main id="main">
 '''
@@ -247,7 +246,7 @@ def footer():
 <footer class="footer">
 <div class="wrap fwrap">
 <div class="ftop">
-<div class="fbrand"><img src="/assets/img/logo-white.webp" alt="{C['name']}" width="141" height="44" loading="lazy"><p>Haemodialysis &amp; holiday dialysis in {C['area']}, Nairobi.</p></div>
+<div class="fbrand"><img src="/assets/img/logo-reverse.webp" alt="{C['name']}" width="141" height="44" loading="lazy"><p>Haemodialysis &amp; holiday dialysis in {C['area']}, Nairobi.</p></div>
 <div class="fcta"><p>Need dialysis in Nairobi?</p><div class="row"><a class="btn btn-white btn-sm" href="/contact">Book a consultation</a><a class="btn btn-ghost-dark btn-sm" href="tel:{C['phone_tel']}">Call us</a></div></div>
 </div>
 <div class="fgrid">
@@ -257,16 +256,19 @@ def footer():
 </div>
 <div class="legalbar">
 <p>Information on this website doesn't replace your doctor's advice. In an emergency, go to the nearest emergency department or call 999 / 112.</p>
-<div class="row-between"><span>© <span data-year>2026</span> {C['name']}</span><span class="links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="/accessibility">Accessibility</a></span></div>
+<nav class="links" aria-label="Legal"><a href="/privacy">Privacy policy</a><a href="/terms">Terms of use</a><a href="/cookies">Cookie policy</a><a href="/accessibility">Accessibility</a></nav>
 </div>
 </div>
 <div class="fanim" aria-hidden="true">
 <div class="wm">
+<div class="wm-stage">
 <p class="wm-text"><span class="wm-word solid"><i style="--i:0">D</i><i style="--i:1">i</i><i style="--i:2">a</i><i style="--i:3">l</i><i style="--i:4">y</i><i style="--i:5">s</i><i style="--i:6">i</i><i style="--i:7">s</i></span><span class="wm-word outline"><i style="--i:8">C</i><i style="--i:9">e</i><i style="--i:10">n</i><i style="--i:11">t</i><i style="--i:12">e</i><i style="--i:13">r</i></span></p>
 <svg class="wm-ecg" viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="trace" d="{WM_ECG}" pathLength="1000"/><path class="beat" d="{WM_ECG}" pathLength="1000"/></svg>
+</div>
 <p class="wm-tag">Life. Hope. Better Tomorrow.</p>
 </div>
 </div>
+<div class="fbase"><div class="wrap">© <span data-year>2026</span> {C['name']}. All rights reserved.</div></div>
 </footer>
 <nav class="actionbar" aria-label="Quick actions">
 <a href="tel:{C['phone_tel']}">{ic("phone")}Call</a>
